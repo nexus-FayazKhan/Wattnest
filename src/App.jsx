@@ -4,6 +4,7 @@ import SignInPage from './pages/auth/SignIn';
 import SignUpPage from './pages/auth/SignUp';
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
+import Reports from './pages/Reports';
 import Footer from './components/Footer';
 import { ThemeProvider } from './context/ThemeContext';
 import { ToastContainer } from 'react-toastify';
@@ -94,6 +95,7 @@ function App() {
         <Route element={<ProtectedLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/reports" element={<Reports />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/" replace />} />
