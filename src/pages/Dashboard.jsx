@@ -20,15 +20,6 @@ import {
 } from '@heroicons/react/24/outline';
 import { FloatingNav } from '../components/ui/floating-navbar';
 
-// Navigation items
-const navItems = [
-  { name: 'Home', path: '/' },
-  { name: 'Dashboard', path: '/dashboard' },
-  { name: 'Reports', path: '/reports' },
-  { name: 'Predictions', path: '/predictions' },
-  { name: 'Bookings', path: '/bookings' },
-];
-
 // Sample data for charts
 const energyData = [
   { name: 'Floor 1', usage: 4000, predicted: 4200 },
@@ -112,12 +103,11 @@ function Dashboard() {
   return (
     <div className="min-h-screen bg-amber-50 dark:bg-gray-900">
       {/* Add floating navbar */}
-      <FloatingNav navItems={navItems} />
+      <FloatingNav />
 
       <div className="pt-24 pb-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Dashboard Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-orange-900 dark:text-white">Energy Dashboard</h1>
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-2">
             <p className="text-orange-700 dark:text-gray-300">
               Smart Hotel Energy Monitoring & Prediction System

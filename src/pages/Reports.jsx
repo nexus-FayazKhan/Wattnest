@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { UserButton } from '@clerk/clerk-react';
 import { motion } from 'framer-motion';
 import { PDFDownloadLink, Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 import html2canvas from 'html2canvas';
@@ -15,15 +14,6 @@ import {
   ArrowPathIcon
 } from '@heroicons/react/24/outline';
 import { FloatingNav } from '../components/ui/floating-navbar';
-
-// Navigation items
-const navItems = [
-  { name: 'Home', path: '/' },
-  { name: 'Dashboard', path: '/dashboard' },
-  { name: 'Reports', path: '/reports' },
-  { name: 'Predictions', path: '/predictions' },
-  { name: 'Bookings', path: '/bookings' },
-];
 
 // Sample data for reports
 const reportTypes = [
@@ -221,15 +211,9 @@ const Reports = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <FloatingNav navItems={navItems} />
+      <FloatingNav />
       
-      <div className="container mx-auto px-4 py-8">
-        {/* Header */}
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-800 dark:text-white">Reports</h1>
-          <UserButton />
-        </div>
-        
+      <div className="container mx-auto px-4 pt-24 pb-8">
         {/* Report Types Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {reportTypes.map((report) => (
