@@ -12,10 +12,7 @@ import {
   WifiIcon,
   BeakerIcon,
   HomeIcon,
-  DeviceTabletIcon,
-  ArrowLongRightIcon,
-  CheckCircleIcon,
-  PresentationChartLineIcon,
+  DeviceTabletIcon
 } from '@heroicons/react/24/outline';
 import { FloatingNav } from '../components/ui/floating-navbar';
 import { AnimatedCards } from '../components/ui/animated-cards';
@@ -23,6 +20,7 @@ import { AnimatedTooltip } from '../components/ui/animated-tooltip';
 import { MovingBorder } from '../components/ui/moving-border';
 import { Sparkles } from '../components/ui/sparkles';
 import ParticleRing from '../components/ui/particle-ring';
+import LightBulb3D from '../components/ui/LightBulb3D';
 
 // Navigation items
 const navItems = [
@@ -40,48 +38,42 @@ const features = [
     title: 'Real-Time Energy Monitoring',
     description: 'Track energy consumption across your hotel in real-time with detailed analytics and insights.',
     icon: <BoltIcon className="h-6 w-6" />,
-    color: 'bg-amber-100 text-orange-700 dark:bg-orange-900/30 dark:text-amber-300',
-    footer: <a href="#" className="text-orange-600 dark:text-amber-400 flex items-center text-sm font-medium hover:underline">Learn more <ArrowLongRightIcon className="h-4 w-4 ml-1" /></a>
+    color: 'bg-amber-100 text-orange-700 dark:bg-orange-900/30 dark:text-amber-300'
   },
   {
     id: 2,
     title: 'Smart AI Predictions',
     description: 'Utilize advanced AI algorithms to predict future usage patterns and optimize energy consumption.',
     icon: <CpuChipIcon className="h-6 w-6" />,
-    color: 'bg-orange-100 text-orange-800 dark:bg-amber-900/30 dark:text-orange-300',
-    footer: <a href="#" className="text-orange-600 dark:text-amber-400 flex items-center text-sm font-medium hover:underline">Learn more <ArrowLongRightIcon className="h-4 w-4 ml-1" /></a>
+    color: 'bg-orange-100 text-orange-800 dark:bg-amber-900/30 dark:text-orange-300'
   },
   {
     id: 3,
     title: 'Booking Integration',
     description: 'Seamlessly integrate with your booking system to adjust energy usage based on occupancy.',
     icon: <BuildingOffice2Icon className="h-6 w-6" />,
-    color: 'bg-amber-100/70 text-orange-700 dark:bg-orange-900/30 dark:text-amber-300',
-    footer: <a href="#" className="text-orange-600 dark:text-amber-400 flex items-center text-sm font-medium hover:underline">Learn more <ArrowLongRightIcon className="h-4 w-4 ml-1" /></a>
+    color: 'bg-amber-100/70 text-orange-700 dark:bg-orange-900/30 dark:text-amber-300'
   },
   {
     id: 4,
     title: 'Cloud Dashboard',
     description: 'Access your energy data from anywhere with our secure, cloud-based dashboard solution.',
     icon: <CloudIcon className="h-6 w-6" />,
-    color: 'bg-orange-100/70 text-orange-800 dark:bg-amber-900/30 dark:text-orange-300',
-    footer: <a href="#" className="text-orange-600 dark:text-amber-400 flex items-center text-sm font-medium hover:underline">Learn more <ArrowLongRightIcon className="h-4 w-4 ml-1" /></a>
+    color: 'bg-orange-100/70 text-orange-800 dark:bg-amber-900/30 dark:text-orange-300'
   },
   {
     id: 5,
     title: 'Energy Insights',
     description: 'Gain valuable insights into energy usage patterns and discover optimization opportunities.',
     icon: <ChartBarIcon className="h-6 w-6" />,
-    color: 'bg-gray-200 text-orange-700 dark:bg-gray-700/30 dark:text-orange-300',
-    footer: <a href="#" className="text-orange-600 dark:text-amber-400 flex items-center text-sm font-medium hover:underline">Learn more <ArrowLongRightIcon className="h-4 w-4 ml-1" /></a>
+    color: 'bg-gray-200 text-orange-700 dark:bg-gray-700/30 dark:text-orange-300'
   },
   {
     id: 6,
     title: 'Smart Room Controls',
     description: 'Control lighting, temperature, and appliances remotely to maximize energy efficiency.',
     icon: <HomeIcon className="h-6 w-6" />,
-    color: 'bg-amber-100/50 text-orange-700 dark:bg-orange-800/30 dark:text-amber-300',
-    footer: <a href="#" className="text-orange-600 dark:text-amber-400 flex items-center text-sm font-medium hover:underline">Learn more <ArrowLongRightIcon className="h-4 w-4 ml-1" /></a>
+    color: 'bg-amber-100/50 text-orange-700 dark:bg-orange-800/30 dark:text-amber-300'
   }
 ];
 
@@ -119,34 +111,6 @@ const people = [
   },
 ];
 
-// Benefits data
-const benefits = [
-  {
-    id: 1,
-    title: "Reduce Energy Costs",
-    description: "Cut operational expenses by up to 30% through intelligent energy management",
-    icon: <CheckCircleIcon className="h-6 w-6 text-orange-600 dark:text-amber-400" />
-  },
-  {
-    id: 2,
-    title: "Enhance Guest Experience",
-    description: "Create optimal comfort levels automatically adjusted to guest preferences",
-    icon: <CheckCircleIcon className="h-6 w-6 text-orange-600 dark:text-amber-400" />
-  },
-  {
-    id: 3,
-    title: "Sustainability Goals",
-    description: "Meet environmental targets and improve your property's green credentials",
-    icon: <CheckCircleIcon className="h-6 w-6 text-orange-600 dark:text-amber-400" />
-  },
-  {
-    id: 4,
-    title: "Data-Driven Decisions",
-    description: "Make informed choices based on comprehensive analytics and insights",
-    icon: <CheckCircleIcon className="h-6 w-6 text-orange-600 dark:text-amber-400" />
-  }
-];
-
 function Home() {
   const { user } = useUser();
   const [isLoading, setIsLoading] = useState(true);
@@ -161,18 +125,15 @@ function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-amber-50 dark:bg-[#111827]">
+    <div className="min-h-screen bg-amber-50 dark:bg-gray-900">
       {/* Floating Navigation */}
       <FloatingNav navItems={navItems} />
 
-      {/* Hero Section */}
-      <div className="relative">
-        {/* Background Canvas */}
-        <div className="absolute inset-0 z-0 bg-gradient-to-b from-amber-50 to-amber-100 dark:from-[#111827] dark:to-gray-900"></div>
-
-        <section className="relative z-10 pt-24 pb-16">
+      {/* Hero Section with Particle Ring Background */}
+      <ParticleRing className="max-w-7xl mx-auto">
+        <section className="pt-24 pb-16 overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[70vh]">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[80vh]">
               {/* Text Content */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
@@ -218,78 +179,31 @@ function Home() {
                     Learn More
                   </motion.a>
                 </div>
-                <div className="mt-12 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-8">
-                  <AnimatedTooltip items={people} />
-                  <div className="text-center sm:text-left">
-                    <p className="text-orange-700 dark:text-gray-300 text-sm">
-                      Trusted by <span className="font-semibold text-orange-600 dark:text-amber-400">100+</span> hotels worldwide
-                    </p>
-                  </div>
-                </div>
               </motion.div>
 
-              {/* Right side - animation or image could be added here */}
+              {/* Energy Visualization */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1, delay: 0.5 }}
-                className="relative h-[500px] lg:h-[600px] w-full hidden lg:block"
+                className="relative h-[500px] lg:h-[700px] w-full"
               >
-                <ParticleRing className="w-full h-full" />
+                {isLoading ? (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-orange-600 dark:border-amber-400"></div>
+                  </div>
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center">
+                    <div className="w-[90%] h-[90%] relative rounded-2xl overflow-hidden">
+                      <LightBulb3D className="w-full h-full" />
+                    </div>
+                  </div>
+                )}
               </motion.div>
             </div>
           </div>
         </section>
-      </div>
-
-      {/* Benefits Section (New) */}
-      <section className="py-16 bg-white dark:bg-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="text-3xl md:text-4xl font-bold mb-4 text-orange-900 dark:text-gray-50"
-            >
-              Why Choose <span className="text-orange-600 dark:text-amber-400">WattNest</span>
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-lg text-orange-800 dark:text-gray-300"
-            >
-              Discover how our smart energy management system can transform your hotel operations
-            </motion.p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {benefits.map((benefit, idx) => (
-              <motion.div
-                key={benefit.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className="bg-amber-50 dark:bg-gray-700 rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow duration-300"
-              >
-                <div className="p-2 bg-amber-100 dark:bg-amber-900/30 rounded-lg w-fit mb-4">
-                  {benefit.icon}
-                </div>
-                <h3 className="text-xl font-semibold mb-2 text-orange-800 dark:text-amber-300">
-                  {benefit.title}
-                </h3>
-                <p className="text-orange-700/80 dark:text-gray-300">
-                  {benefit.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+      </ParticleRing>
 
       {/* Features Section */}
       <section id="features" className="py-20">
@@ -320,7 +234,7 @@ function Home() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 bg-gradient-to-r from-orange-500/5 to-amber-500/5 dark:from-[#111827] dark:to-gray-900">
+      <section className="py-16 bg-gradient-to-r from-orange-500/5 to-amber-500/5 dark:from-orange-900/10 dark:to-amber-900/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <motion.div
@@ -363,84 +277,6 @@ function Home() {
               <p className="text-4xl font-bold text-amber-500 dark:text-orange-300 mb-2">5min</p>
               <p className="text-orange-800 dark:text-gray-300">Setup Time</p>
             </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* How It Works Section (New) */}
-      <section className="py-20 bg-white dark:bg-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="text-3xl md:text-4xl font-bold mb-6 text-orange-900 dark:text-gray-50"
-            >
-              How <span className="text-orange-600 dark:text-amber-400">WattNest</span> Works
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-lg text-orange-800 dark:text-gray-300"
-            >
-              Our simple three-step process to revolutionize your hotel's energy management
-            </motion.p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                step: "01",
-                title: "Connect",
-                description: "Install our smart sensors and connect your existing systems to our platform",
-                icon: <WifiIcon className="h-8 w-8 text-orange-600 dark:text-amber-400" />
-              },
-              {
-                step: "02",
-                title: "Analyze",
-                description: "Our AI analyzes consumption patterns and identifies optimization opportunities",
-                icon: <PresentationChartLineIcon className="h-8 w-8 text-orange-600 dark:text-amber-400" />
-              },
-              {
-                step: "03",
-                title: "Optimize",
-                description: "Implement automated energy-saving measures and monitor improvements",
-                icon: <DeviceTabletIcon className="h-8 w-8 text-orange-600 dark:text-amber-400" />
-              }
-            ].map((item, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.2 }}
-                className="relative"
-              >
-                <div className="bg-amber-50 dark:bg-gray-700 rounded-xl p-8 h-full">
-                  <div className="absolute -top-4 -left-4 bg-orange-600 dark:bg-amber-500 rounded-full w-12 h-12 flex items-center justify-center text-white text-xl font-bold">
-                    {item.step}
-                  </div>
-                  <div className="flex flex-col h-full pt-4">
-                    <div className="mb-4">{item.icon}</div>
-                    <h3 className="text-xl font-semibold mb-3 text-orange-800 dark:text-amber-300">
-                      {item.title}
-                    </h3>
-                    <p className="text-orange-700/80 dark:text-gray-300 mb-4">
-                      {item.description}
-                    </p>
-                  </div>
-                </div>
-                {idx < 2 && (
-                  <div className="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2 z-10">
-                    <ArrowRightIcon className="h-8 w-8 text-orange-600 dark:text-amber-400" />
-                  </div>
-                )}
-              </motion.div>
-            ))}
           </div>
         </div>
       </section>

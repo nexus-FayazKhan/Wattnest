@@ -32,8 +32,8 @@ const ParticleRing = ({ className, children }) => {
     // Create particles
     for (let i = 0; i < particleCount; i++) {
       const angle = Math.random() * Math.PI * 2;
-      const radius = 100 + Math.random() * 150;
-      const speed = 0.01 + Math.random() * 0.02;
+      const radius = 150 + Math.random() * 150;
+      const speed = 0.001 + Math.random() * 0.002;
       
       particles.push({
         x: 0,
