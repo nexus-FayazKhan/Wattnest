@@ -450,12 +450,7 @@ const Reports = () => {
         <div className="flex flex-col space-y-8">
           {/* Header */}
           <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Energy Reports</h1>
-              <p className="text-gray-700 dark:text-gray-300 mt-1">
-                Generate and download detailed energy consumption reports
-              </p>
-            </div>
+            <div className='h-10 w-full rounded-xl shadow-lg'></div>
           </div>
           
           {loading ? (
@@ -599,33 +594,6 @@ const Reports = () => {
                       
                       {selectedReport.id === 'energy-consumption' && (
                         <>
-                          <div className="mb-8">
-                            <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">Monthly Energy Consumption</h2>
-                            <div className="h-80 w-full">
-                              <ResponsiveContainer width="100%" height="100%">
-                                <BarChart data={processMonthlyConsumption()} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                                  <CartesianGrid strokeDasharray="3 3" stroke="#f59e0b33" />
-                                  <XAxis dataKey="name" stroke="#f59e0b" />
-                                  <YAxis stroke="#f59e0b" />
-                                  <Tooltip 
-                                    contentStyle={{ 
-                                      backgroundColor: '#fef3c7', 
-                                      borderColor: '#f59e0b',
-                                      color: '#92400e',
-                                      borderRadius: '0.5rem'
-                                    }}
-                                    formatter={(value, name) => [`${value.toFixed(2)} kWh`, name]}
-                                  />
-                                  <Legend />
-                                  <Bar dataKey="Light" name="Lighting" fill="#fbbf24" />
-                                  <Bar dataKey="Fan" name="Fans" fill="#f59e0b" />
-                                  <Bar dataKey="AC" name="AC" fill="#d97706" />
-                                  <Bar dataKey="TV" name="TV/Electronics" fill="#b45309" />
-                                </BarChart>
-                              </ResponsiveContainer>
-                            </div>
-                          </div>
-                          
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
                             <div>
                               <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">Energy by Room</h2>
@@ -773,40 +741,6 @@ const Reports = () => {
                       
                       {selectedReport.id === 'cost-analysis' && (
                         <>
-                          <div className="mb-8">
-                            <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">Monthly Energy Cost</h2>
-                            <div className="h-80 w-full">
-                              <ResponsiveContainer width="100%" height="100%">
-                                <BarChart data={processMonthlyConsumption().map(item => ({
-                                  ...item,
-                                  LightCost: item.Light * 0.15,
-                                  FanCost: item.Fan * 0.15,
-                                  ACCost: item.AC * 0.15,
-                                  TVCost: item.TV * 0.15,
-                                  TotalCost: item.Total * 0.15
-                                }))} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                                  <CartesianGrid strokeDasharray="3 3" stroke="#f59e0b33" />
-                                  <XAxis dataKey="name" stroke="#f59e0b" />
-                                  <YAxis stroke="#f59e0b" />
-                                  <Tooltip 
-                                    contentStyle={{ 
-                                      backgroundColor: '#fef3c7', 
-                                      borderColor: '#f59e0b',
-                                      color: '#92400e',
-                                      borderRadius: '0.5rem'
-                                    }}
-                                    formatter={(value, name) => [`$${value.toFixed(2)}`, name.replace('Cost', '')]}
-                                  />
-                                  <Legend />
-                                  <Bar dataKey="LightCost" name="Lighting" fill="#fbbf24" />
-                                  <Bar dataKey="FanCost" name="Fans" fill="#f59e0b" />
-                                  <Bar dataKey="ACCost" name="AC" fill="#d97706" />
-                                  <Bar dataKey="TVCost" name="TV/Electronics" fill="#b45309" />
-                                </BarChart>
-                              </ResponsiveContainer>
-                            </div>
-                          </div>
-                          
                           <div className="mb-8">
                             <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">Cost by Room</h2>
                             <div className="h-80 w-full">
