@@ -436,18 +436,21 @@ const Reports = () => {
     return consumption * 0.5;
   };
 
+  // Navigation items
+  const navItems = [
+    { name: 'Home', path: '/' },
+    { name: 'Dashboard', path: '/dashboard' },
+    { name: 'Reports', path: '/reports' },
+    { name: 'Tips', path: '/tips' },
+    { name: 'Settings', path: '/settings' },
+  ];
+
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <FloatingNav navItems={[
-        { name: 'Home', path: '/' },
-        { name: 'Dashboard', path: '/dashboard' },
-        { name: 'Reports', path: '/reports' },
-        { name: 'Predictions', path: '/predictions' },
-        { name: 'Bookings', path: '/bookings' },
-      ]} />
+    <div className="min-h-screen bg-orange-50 dark:bg-gray-900 pt-16">
+      <FloatingNav navItems={navItems} />
       
       <div className="container mx-auto px-4 py-8">
-        <div className="flex flex-col space-y-8">
+        <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="flex flex-col md:flex-row md:items-center md:justify-between">
             <div className='h-10 w-full rounded-xl shadow-lg'></div>

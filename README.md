@@ -1,172 +1,87 @@
-# Edvise - Student Support Platform
+# WattNest - Smart Energy Management System
 
-Edvise is an innovative student support platform designed to empower students with interactive learning tools, collaboration features, and a modern architecture to enhance their educational experience.
+WattNest is an innovative energy management platform designed to help hotels and commercial buildings monitor, analyze, and optimize their energy consumption. The system provides real-time insights, predictive analytics, and actionable recommendations to reduce energy costs and environmental impact.
+
+## Features
+
+- **Interactive Dashboard**: Real-time visualization of energy consumption data with filtering options by time period
+- **Room-Level Monitoring**: Track energy usage at individual room level with appliance-specific breakdowns
+- **Detailed Reports**: Generate comprehensive energy consumption reports with cost analysis and sustainability metrics
+- **Predictive Analytics**: Forecast future energy consumption based on historical patterns
+- **Energy-Saving Recommendations**: Actionable insights to reduce energy consumption and costs
+- **Hotel Simulation**: Dashboard view for monitoring all hotel rooms with status indicators for appliances, occupancy, and door locks
+- **Auto Power-Off**: Automatically turns off appliances when rooms become vacant
+
+## Technology Stack
+
+- **Frontend**: React.js with Tailwind CSS for responsive design
+- **Charting**: Recharts for data visualization
+- **PDF Generation**: React-PDF for report generation
+- **State Management**: React Hooks for state management
+- **Authentication**: Clerk for user authentication
+- **Styling**: Tailwind CSS with custom theming
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v14 or higher)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+   ```
+   git clone https://github.com/RhugvedDangui/WattNest.git
+   ```
+
+2. Navigate to the project directory:
+   ```
+   cd WattNest
+   ```
+
+3. Install dependencies:
+   ```
+   npm install
+   ```
+
+4. Start the development server:
+   ```
+   npm run dev
+   ```
+
+5. Open your browser and navigate to:
+   ```
+   http://localhost:5173
+   ```
+
+## Project Structure
+
+- `/src`: Source code
+  - `/components`: Reusable UI components
+  - `/pages`: Application pages (Dashboard, Reports, Predictions)
+  - `/assets`: Static assets like images and icons
+  - `/hooks`: Custom React hooks
+  - `/utils`: Utility functions
 
 ## Team Information
+
 ### Team Name
 EQUINOX
 
-### Team Leader
-- **Rhugved Dangui**  
-  - Contact: 8805218288 
-  - Email: rhugveddangui07@gmail.com
-
 ### Team Members
-1. **Fayaz Khan**  
-   - Contact: 9209352504  
+1. **Rhugved Dangui** (Team Leader)  
+   - Email: rhugveddangui07@gmail.com
+2. **Fayaz Khan**  
    - Email: fayaz.khanxid411@gmail.com
-2. **Tanmay Desai**  
-   - Contact:9860997932 
+3. **Tanmay Desai**  
    - Email: tanmay2004desai@gmail.com
 
-### Individual Contributions
-1. **Rhugved Dangui**:  
-   - Project Management  
-   - Frontend Development    
-2. **Fayaz Khan**:  
-   - Backend Integration  
-   - Database Management  
-   - API Development  
-3. **Tanmay Desai**:  
-   - Real-time Collaboration Features   
-   - Testing and Debugging  
-   - UI/UX Design
+## License
 
-### Collaborations
-- **Rhugved Dangui & Fayaz Khan**: Worked together on integrating the frontend with the backend APIs for seamless data flow.  
-- **Fayaz Khan & Tanmay Desai**: Collaborated on real-time chat functionality using Socket.IO and database optimization.  
-- **Tanmay Desai & Rhugved Dangui**: Partnered on designing interactive learning roadmaps and ensuring UI responsiveness.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
----
+## Acknowledgments
 
-## Project Structure
-```
-Edvise/
-├── src/                    # Frontend source code
-│   ├── components/         # Reusable UI components
-│   │   ├── Hero.jsx
-│   │   └── Footer.jsx
-│   ├── pages/             # Page components
-│   │   ├── Home.jsx
-│   │   ├── CollegeDetails.jsx
-│   │   └── Roadmap.jsx    # Interactive learning roadmap
-│   ├── api/               # Backend API integration
-│   │   └── server.js
-│   └── App.jsx            # Main application component
-├── server/                # Collaborative whiteboard server
-├── public/                # Static assets (images, fonts, etc.)
-└── package.json           # Project dependencies and scripts
-```
-
----
-
-## Project Approach
-Edvise is designed to provide students with a comprehensive support system, featuring:
-
-1. **Interactive Learning Roadmaps**  
-   - Visual progression tracking  
-   - Customizable learning paths  
-   - Progress monitoring  
-
-
-2. **Modern Architecture**  
-   - Component-based React architecture  
-   - Real-time updates using Socket.IO  
-   - Secure authentication with Clerk  
-   - MongoDB database for data persistence  
-
----
-
-## Tech Stack
-### Frontend
-- **React 18**: Core library for building UI  
-- **Vite**: Fast build tool and development server  
-- **Framer Motion**: Smooth animations  
-- **ReactFlow**: Interactive diagrams for roadmaps  
-- **React Router DOM**: Client-side navigation  
-- **React Icons**: Icon library  
-- **HTML2Canvas & jsPDF**: PDF generation from UI  
-- **DND Kit**: Drag-and-drop functionality  
-- **Date-fns**: Date formatting utilities  
-
-### Backend
-- **Express.js**: Web framework for Node.js  
-- **Socket.IO**: Real-time collaboration features  
-- **MongoDB with Mongoose**: Database and ORM  
-- **Clerk**: Authentication and user management  
-- **Google AI Integration**: AI-powered features  
-
-### Development Tools
-- **Concurrently**: Run multiple scripts simultaneously  
-- **ESLint**: Code linting for consistency  
-- **Nodemon**: Auto-restart server during development  
-
----
-
-## Build and Run Commands
-
-### Prerequisites
-- **Node.js**: Version 14 or higher  
-- **npm or yarn**: Package manager  
-- **MongoDB**: Local or cloud instance  
-- **Clerk Account**: For authentication setup  
-- **Google AI API Key**: For AI-powered features  
-
-### Installation
-```bash
-# Clone the repository
-git clone [repository-url]
-
-# Install frontend dependencies
-npm install
-
-# Install server dependencies
-cd server
-npm install
-cd ..
-```
-
-### Development
-```bash
-# Run frontend and backend concurrently
-npm run dev:all
-
-# Or run separately:
-# Frontend only (Port: 5173)
-npm run dev
-
-# Backend only (Port: 3000)
-npm run server
-```
-
-### Production Build
-```bash
-# Create production build
-npm run build
-
-# Preview production build
-npm run preview
-```
-
----
-
-## Environment Variables
-Create a `.env` file in the root directory with the following:
-```
-VITE_CLERK_PUBLISHABLE_KEY=[Your Clerk Publishable Key]
-VITE_GOOGLE_AI_API_KEY=[Your Google AI API Key]
-MONGODB_URI=[Your MongoDB Connection String]
-```
-
----
-
-## Additional Information
-- **Development Ports**:  
-  - Frontend: `http://localhost:5173`  
-  - Backend API: `http://localhost:3000`  
-  - Whiteboard Server: `http://localhost:3001`  
-- **Deployment**: Ensure environment variables are set in your production environment.  
-- **Future Enhancements**:  
-  - Add AI-driven personalized learning recommendations.  
-  - Expand collaboration tools with video/audio integration.  
-
+- Special thanks to all contributors who have helped make WattNest better
+- Inspired by the need for more efficient energy management solutions in the hospitality industry
