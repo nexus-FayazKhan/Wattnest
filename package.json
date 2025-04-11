@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://rhugveddangui.github.io/WattNest",
+  "homepage": "https://nexus-FayazKhan.github.io/Wattnest",
   "scripts": {
     "dev": "vite",
     "server": "node src/api/server.js",
