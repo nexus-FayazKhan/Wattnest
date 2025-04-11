@@ -108,18 +108,52 @@ function Dashboard() {
     
     // Group by hour and sum values
     const hourlyChartData = hourlyData
-      .filter(item => new Date(item.timestamp).getDate() === new Date().getDate())
+      .slice(0, 24) // Use the first 24 hours for demonstration
       .map(item => ({
         name: `${item.hour}:00`,
-        Light: parseFloat(item.Light) * 1000, // Convert to watts for better visualization
-        Fan: parseFloat(item.Fan) * 1000,
-        AC: parseFloat(item.AC) * 1000,
-        TV: parseFloat(item.TV) * 1000,
-        hour: parseInt(item.hour)
+        Light: parseFloat(item.Light || 0) * 1000, // Convert to watts for better visualization
+        Fan: parseFloat(item.Fan || 0) * 1000,
+        AC: parseFloat(item.AC || 0) * 1000,
+        TV: parseFloat(item.TV || 0) * 1000,
+        hour: parseInt(item.hour || 0)
       }))
       .sort((a, b) => a.hour - b.hour);
     
     return hourlyChartData;
+  };
+
+  // Process weekly data for charts
+  const processWeeklyData = () => {
+    if (!hourlyData.length) return [];
+    
+    // Days of the week
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    
+    // Initialize data structure for each day of the week
+    const weeklyData = days.map(day => ({
+      name: day,
+      Light: 0,
+      Fan: 0,
+      AC: 0,
+      TV: 0
+    }));
+    
+    // Use the first 168 hours (7 days * 24 hours) for demonstration
+    const weekHourlyData = hourlyData.slice(0, 168);
+    
+    // Aggregate by day of week
+    weekHourlyData.forEach((item, index) => {
+      // Calculate day index (0-6) based on the item index
+      const dayIndex = Math.floor(index / 24) % 7;
+      
+      // Add values to the corresponding day
+      weeklyData[dayIndex].Light += parseFloat(item.Light || 0) * 1000;
+      weeklyData[dayIndex].Fan += parseFloat(item.Fan || 0) * 1000;
+      weeklyData[dayIndex].AC += parseFloat(item.AC || 0) * 1000;
+      weeklyData[dayIndex].TV += parseFloat(item.TV || 0) * 1000;
+    });
+    
+    return weeklyData;
   };
 
   // Process monthly data for charts
@@ -131,16 +165,16 @@ function Dashboard() {
     
     // Group by month and sum values
     const monthlyChartData = monthlyData.map(item => {
-      const [year, month] = item.month_year.split('-');
+      const [year, month] = (item.month_year || "2025-01").split('-');
       const monthIndex = parseInt(month) - 1;
       
       return {
         name: monthNames[monthIndex],
-        Light: parseFloat(item.Light),
-        Fan: parseFloat(item.Fan),
-        AC: parseFloat(item.AC),
-        TV: parseFloat(item.TV),
-        Total: parseFloat(item.Total),
+        Light: parseFloat(item.Light || 0) * 100, // Scale for better visualization
+        Fan: parseFloat(item.Fan || 0) * 100,
+        AC: parseFloat(item.AC || 0) * 100,
+        TV: parseFloat(item.TV || 0) * 100,
+        Total: parseFloat(item.Total || 0) * 100,
         roomId: item.roomId
       };
     });
@@ -154,15 +188,15 @@ function Dashboard() {
     
     // Group by room and calculate total energy usage
     const roomData = [];
-    const roomIds = [...new Set(monthlyData.map(item => item.roomId))];
+    const roomIds = [...new Set(monthlyData.map(item => item.roomId))].filter(Boolean);
     
     roomIds.forEach(roomId => {
       const roomItems = monthlyData.filter(item => item.roomId === roomId);
-      const totalUsage = roomItems.reduce((sum, item) => sum + parseFloat(item.Total), 0);
+      const totalUsage = roomItems.reduce((sum, item) => sum + parseFloat(item.Total || 0), 0);
       
       roomData.push({
         name: `Room ${roomId}`,
-        total: totalUsage
+        total: totalUsage * 100 // Scale for better visualization
       });
     });
     
@@ -191,10 +225,10 @@ function Dashboard() {
     
     // Convert to array format for chart
     return [
-      { name: 'Lighting', value: applianceUsage.Light, fill: '#fbbf24' },
-      { name: 'Fans', value: applianceUsage.Fan, fill: '#f59e0b' },
-      { name: 'AC', value: applianceUsage.AC, fill: '#d97706' },
-      { name: 'TV/Electronics', value: applianceUsage.TV, fill: '#b45309' }
+      { name: 'Lighting', value: applianceUsage.Light * 100, fill: '#fbbf24' },
+      { name: 'Fans', value: applianceUsage.Fan * 100, fill: '#f59e0b' },
+      { name: 'AC', value: applianceUsage.AC * 100, fill: '#d97706' },
+      { name: 'TV/Electronics', value: applianceUsage.TV * 100, fill: '#b45309' }
     ].sort((a, b) => b.value - a.value); // Sort by highest usage first
   };
 
@@ -204,7 +238,7 @@ function Dashboard() {
     
     // Group by room and calculate appliance usage for each room
     const roomApplianceData = [];
-    const roomIds = [...new Set(monthlyData.map(item => item.roomId))];
+    const roomIds = [...new Set(monthlyData.map(item => item.roomId))].filter(Boolean);
     
     roomIds.forEach(roomId => {
       const roomItems = monthlyData.filter(item => item.roomId === roomId);
@@ -231,29 +265,12 @@ function Dashboard() {
     switch (filterPeriod) {
       case 'hourly':
         return processHourlyData();
+      case 'weekly':
+        return processWeeklyData();
       case 'monthly':
         return processMonthlyData();
       default:
-        // Weekly data - we'll use hourly data and group it
-        const hourlyProcessed = processHourlyData();
-        // Group by day of week for demo purposes
-        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-        const today = new Date().getDay();
-        
-        return days.map((day, index) => {
-          const dayOffset = (index - today + 7) % 7;
-          const baseValue = 2000 + Math.random() * 1500;
-          const bookings = 10 + Math.floor(Math.random() * 30);
-          
-          // Use real data for today
-          if (dayOffset === 0 && hourlyProcessed.length > 0) {
-            const todayTotal = hourlyProcessed.reduce((sum, item) => 
-              sum + item.Light + item.Fan + item.AC + item.TV, 0);
-            return { name: day, usage: todayTotal, bookings };
-          }
-          
-          return { name: day, usage: baseValue, bookings };
-        });
+        return processWeeklyData();
     }
   };
 
@@ -421,7 +438,7 @@ function Dashboard() {
                           <Line type="monotone" dataKey="TV" name="TV/Electronics" stroke="#b45309" strokeWidth={2} />
                         </LineChart>
                       ) : (
-                        <AreaChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                        <BarChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
                           <CartesianGrid strokeDasharray="3 3" stroke="#f59e0b33" />
                           <XAxis dataKey="name" stroke="#f59e0b" />
                           <YAxis stroke="#f59e0b" />
@@ -434,9 +451,11 @@ function Dashboard() {
                             }} 
                           />
                           <Legend />
-                          <Area type="monotone" dataKey="usage" name="Energy Usage (kWh)" fill="#f59e0b" stroke="#d97706" fillOpacity={0.6} />
-                          <Area type="monotone" dataKey="bookings" name="Room Bookings" fill="#fbbf24" stroke="#f59e0b" fillOpacity={0.4} />
-                        </AreaChart>
+                          <Bar dataKey="Light" name="Lighting" fill="#fbbf24" />
+                          <Bar dataKey="Fan" name="Fans" fill="#f59e0b" />
+                          <Bar dataKey="AC" name="AC" fill="#d97706" />
+                          <Bar dataKey="TV" name="TV/Electronics" fill="#b45309" />
+                        </BarChart>
                       )}
                     </ResponsiveContainer>
                   </div>
