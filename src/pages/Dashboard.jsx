@@ -44,7 +44,7 @@ const navItems = [
   { name: 'Dashboard', path: '/dashboard' },
   { name: 'Reports', path: '/reports' },
   { name: 'Predictions', path: '/predictions' },
-  { name: 'Bookings', path: '/bookings' },
+  { name: 'Settings', path: '/settings' },
 ];
 
 function Dashboard() {
@@ -163,20 +163,35 @@ function Dashboard() {
     // Map month numbers to names
     const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     
-    // Group by month and sum values
-    const monthlyChartData = monthlyData.map(item => {
-      const [year, month] = (item.month_year || "2025-01").split('-');
+    // Get unique month-years
+    const uniqueMonthYears = [...new Set(monthlyData.map(item => item.month_year))].filter(Boolean);
+    
+    // Create aggregated data by month
+    const monthlyChartData = uniqueMonthYears.map(monthYear => {
+      const [year, month] = (monthYear || "2025-01").split('-');
       const monthIndex = parseInt(month) - 1;
+      
+      // Get all items for this month across all rooms
+      const monthItems = monthlyData.filter(item => item.month_year === monthYear);
+      
+      // Sum up values across all rooms for this month
+      const totalLight = monthItems.reduce((sum, item) => sum + parseFloat(item.Light || 0), 0);
+      const totalFan = monthItems.reduce((sum, item) => sum + parseFloat(item.Fan || 0), 0);
+      const totalAC = monthItems.reduce((sum, item) => sum + parseFloat(item.AC || 0), 0);
+      const totalTV = monthItems.reduce((sum, item) => sum + parseFloat(item.TV || 0), 0);
       
       return {
         name: monthNames[monthIndex],
-        Light: parseFloat(item.Light || 0) * 100, // Scale for better visualization
-        Fan: parseFloat(item.Fan || 0) * 100,
-        AC: parseFloat(item.AC || 0) * 100,
-        TV: parseFloat(item.TV || 0) * 100,
-        Total: parseFloat(item.Total || 0) * 100,
-        roomId: item.roomId
+        month_year: monthYear,
+        Light: totalLight,
+        Fan: totalFan,
+        AC: totalAC,
+        TV: totalTV,
+        Total: totalLight + totalFan + totalAC + totalTV
       };
+    }).sort((a, b) => {
+      // Sort by month-year
+      return a.month_year.localeCompare(b.month_year);
     });
     
     return monthlyChartData;
@@ -308,6 +323,7 @@ function Dashboard() {
   ];
 
   return (
+
     <div className="min-h-screen bg-orange-50 dark:bg-gray-900">
       <FloatingNav navItems={navItems} />
       
@@ -316,6 +332,7 @@ function Dashboard() {
           <div className="text-center">
             <ArrowPathIcon className="h-12 w-12 mx-auto animate-spin text-orange-500" />
             <h2 className="mt-4 text-xl font-semibold text-orange-800 dark:text-orange-200">Loading dashboard data...</h2>
+
           </div>
         </div>
       ) : error ? (
@@ -335,15 +352,11 @@ function Dashboard() {
           </div>
         </div>
       ) : (
-        <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto px-4 py-8 pt-16">
           <div className="flex flex-col space-y-8">
             {/* Header */}
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between mt-6">
               <div>
-                <h1 className="text-3xl font-bold text-orange-900 dark:text-white">Energy Dashboard</h1>
-                <p className="text-orange-700 dark:text-orange-300 mt-1">
-                  Welcome back, {user?.firstName || 'User'}! Here's your energy overview.
-                </p>
                 <p className="text-sm text-orange-600 dark:text-orange-400 mt-1">
                   Last updated: {currentTime.toLocaleString()}
                 </p>
@@ -359,22 +372,6 @@ function Dashboard() {
                   <option value="weekly">Weekly</option>
                   <option value="monthly">Monthly</option>
                 </select>
-                
-                <select 
-                  value={filterFloor}
-                  onChange={handleFloorChange}
-                  className="px-4 py-2 bg-white dark:bg-gray-800 border border-orange-200 dark:border-gray-700 rounded-lg text-orange-900 dark:text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
-                >
-                  <option value="all">All Floors</option>
-                  <option value="1">Floor 1</option>
-                  <option value="2">Floor 2</option>
-                  <option value="3">Floor 3</option>
-                </select>
-                
-                <button className="px-4 py-2 bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-amber-300 rounded-lg hover:bg-orange-200 dark:hover:bg-orange-800/30 transition-colors flex items-center justify-center">
-                  <ArrowDownTrayIcon className="h-5 w-5 mr-2" />
-                  Export
-                </button>
               </div>
             </div>
             
@@ -410,7 +407,8 @@ function Dashboard() {
                               borderColor: '#f59e0b',
                               color: '#92400e',
                               borderRadius: '0.5rem'
-                            }} 
+                            }}
+                            formatter={(value, name) => [`${value.toFixed(2)} kWh`, name]}
                           />
                           <Legend />
                           <Bar dataKey="Light" name="Lighting" fill="#fbbf24" />
@@ -429,7 +427,8 @@ function Dashboard() {
                               borderColor: '#f59e0b',
                               color: '#92400e',
                               borderRadius: '0.5rem'
-                            }} 
+                            }}
+                            formatter={(value, name) => [`${value.toFixed(2)} W`, name]}
                           />
                           <Legend />
                           <Line type="monotone" dataKey="Light" name="Lighting" stroke="#fbbf24" strokeWidth={2} />
@@ -448,7 +447,8 @@ function Dashboard() {
                               borderColor: '#f59e0b',
                               color: '#92400e',
                               borderRadius: '0.5rem'
-                            }} 
+                            }}
+                            formatter={(value, name) => [`${value.toFixed(2)} W`, name]}
                           />
                           <Legend />
                           <Bar dataKey="Light" name="Lighting" fill="#fbbf24" />

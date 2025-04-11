@@ -23,13 +23,6 @@ import ParticleRing from '../components/ui/particle-ring';
 import LightBulb3D from '../components/ui/LightBulb3D';
 
 // Navigation items
-const navItems = [
-  { name: 'Home', path: '/' },
-  { name: 'Dashboard', path: '/dashboard' },
-  { name: 'Reports', path: '/reports' },
-  { name: 'Predictions', path: '/predictions' },
-  { name: 'Bookings', path: '/bookings' },
-];
 
 // Features data
 const features = [
@@ -127,7 +120,7 @@ function Home() {
   return (
     <div className="min-h-screen bg-amber-50 dark:bg-gray-900">
       {/* Floating Navigation */}
-      <FloatingNav navItems={navItems} />
+      <FloatingNav />
 
       {/* Hero Section with Particle Ring Background */}
       <ParticleRing className="max-w-7xl mx-auto">

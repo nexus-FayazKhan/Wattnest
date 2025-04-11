@@ -4,15 +4,47 @@ import { cn } from "../../utils/cn";
 import { useTheme } from "../../context/ThemeContext";
 import { SunIcon, MoonIcon } from "@heroicons/react/24/outline";
 
+// Define default navigation items to ensure consistency across all pages
+const defaultNavItems = [
+  { name: 'Home', path: '/' },
+  { name: 'Dashboard', path: '/dashboard' },
+  { name: 'Reports', path: '/reports' },
+  { name: 'Predictions', path: '/predictions' },
+  { name: 'Settings', path: '/settings' },
+];
+
 export const FloatingNav = ({
-  navItems,
+  navItems = defaultNavItems,
   className,
 }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
   const { darkMode, toggleDarkMode } = useTheme();
 
+  // Function to determine the active index based on current path
+  const getActiveIndexFromPath = () => {
+    const currentPath = window.location.pathname;
+    const index = navItems.findIndex(item => {
+      // Handle exact match
+      if (item.path === currentPath) return true;
+      
+      // Handle home page special case
+      if (currentPath === "/" && item.path === "/") return true;
+      
+      // Handle subpaths (e.g., /reports/something should still highlight Reports)
+      if (item.path !== "/" && currentPath.startsWith(item.path)) return true;
+      
+      return false;
+    });
+    
+    return index !== -1 ? index : 0; // Default to first item if no match
+  };
+
   useEffect(() => {
+    // Set active index based on current path on component mount and URL changes
+    setActiveIndex(getActiveIndexFromPath());
+    
+    // Set up scroll event listener
     const handleScroll = () => {
       if (window.scrollY > 100) {
         setIsScrolled(true);
@@ -21,9 +53,19 @@ export const FloatingNav = ({
       }
     };
 
+    // Listen for popstate events (browser back/forward navigation)
+    const handlePopState = () => {
+      setActiveIndex(getActiveIndexFromPath());
+    };
+
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    window.addEventListener("popstate", handlePopState);
+    
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [navItems]);
 
   return (
     <AnimatePresence mode="wait">
