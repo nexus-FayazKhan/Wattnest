@@ -12,13 +12,23 @@ import { ThemeProvider } from './context/ThemeContext';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+// Function to determine if we're on GitHub Pages
+const isGitHubPages = () => {
+  return window.location.hostname.includes('github.io');
+};
+
+// Function to get the base path
+const getBasePath = () => {
+  return isGitHubPages() ? '/Wattnest' : '';
+};
 
 const ProtectedLayout = () => {
   const { isSignedIn, isLoaded } = useAuth();
   const location = useLocation();
   
   // Hide footer on dashboard page for better visualization experience
-  const hideFooter = location.pathname === '/dashboard';
+  const hideFooter = location.pathname === '/dashboard' || 
+                    location.pathname === `${getBasePath()}/dashboard`;
 
   if (!isLoaded) {
     return (
@@ -79,7 +89,7 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={getBasePath()}>
       <Routes>
         {/* Public Routes */}
         <Route path="/sign-in" element={
