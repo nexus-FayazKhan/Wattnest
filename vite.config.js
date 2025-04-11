@@ -8,7 +8,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:5001', // Updated to port 5001
+        target: 'https://nexus-fayazkhan.github.io/', // Updated to port 5001
         changeOrigin: true,
         secure: false,
       },
