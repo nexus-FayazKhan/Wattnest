@@ -4,11 +4,11 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/',
+  base: '/Wattnest',
   server: {
     proxy: {
       '/api': {
-        target: 'https://nexus-fayazkhan.github.io/', // Updated to port 5001
+        target: 'http://localhost:5001', // Local development API
         changeOrigin: true,
         secure: false,
       },
